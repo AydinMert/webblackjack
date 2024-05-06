@@ -1,0 +1,395 @@
+:root {
+  --table-size:75vw;
+  --table-border:6vw;
+  --table-text-color: #a2aa07;;
+  --table-bg:#007200;
+  --lines:#b3b3b3;
+  --insurance:calc(var(--table-size) - var(--table-border)*3.6);
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+/*FORM*/
+.cross {
+  position: absolute;
+  top: 6%;
+  left: 87%;
+  width: 3vw;
+  height: 3vw;
+}
+
+.cross div{
+
+  position: absolute;
+  width: 3vw;
+  height: 0.3vw;
+  background-color: whitesmoke;
+  transform: rotate(45deg);
+  border-radius: 5px;
+}
+
+.cross div:nth-child(2){
+  transform: rotate(-45deg);
+}
+
+.form-chips {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-chip {
+  width: 20vw;
+  height: 20vw;
+  transform: translate(-45%, -45%);
+}
+
+.form-chip:nth-child(2){
+  transform: translate(0, 145%)
+}
+
+#formContainer {
+  position: absolute;
+  width: 30vw;
+  height: 40vw;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50% , -50%);
+  background-color: #2e2e2e;
+  border: 1px solid #929292;
+  border-radius: 2vw;
+  box-shadow: 0px 0px 20px 10px #4643439c, 0px 0px 0px 100vw #00000075;
+  overflow: hidden;
+}
+
+/*FORM CONTENT*/
+
+.frm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:2vw;
+}
+
+.frm form input {
+  padding-left: 1vw;
+  width: 14vw;
+  height: 2.5vw;
+  border: 0.1vw solid rgba(92, 92, 92, 0.849);
+  border-radius: 0.75vw;
+  background-color: rgb(247, 242, 242);
+  color: rgb(27, 26, 26);
+  margin-bottom: 1vw;
+  z-index: 1000;
+
+}
+
+.frm form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.frm h2 {
+  color: rgb(247, 242, 242);
+  font-size: 2vw;
+  font-family: 'Marcellus', serif;
+}
+
+.frm form label {
+  color: rgb(247, 242, 242);
+  font-family: 'Marcellus', serif;
+  font-size: large;
+  font-weight: 500;
+  font-size: 1.5vw;
+}
+
+.frm form button {
+  margin-top: 2vw;
+  width: 15vw;
+  min-height: 3.4vw;
+  border: 1px solid rgba(92, 92, 92, 0.849);
+  border-radius: 5px;
+  color: rgb(247, 242, 242);
+  background-color: rgb(40, 40, 40);
+  font-size: 1.5vw;
+  font-family: 'Marcellus', serif;
+  transition: transform 0.3s, box-shadow 0.3s;
+  z-index: 1000;
+}
+
+.frm form button:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 0px 5px 1px rgba(92, 92, 92, 0.849);
+  cursor: pointer;
+}
+.frm div  {  
+  z-index: 1000;
+}
+.frm div #register {
+  color: aqua;    
+}
+
+
+.frm #register:hover  {
+  cursor: pointer;
+  scale: 1.2;
+}
+
+.swal2-popup {
+          font-size: 1rem !important;
+          font-family: Arial, Helvetica, sans-serif, serif;
+        }
+
+/*HEADER*/
+.header-container {
+  width: inherit;
+  background-color: #2e2e2e;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 20px;
+  box-shadow: 0px 1px 20px 0px rgba(0, 0, 0, 0.4);
+}
+
+.site-title {
+  font-size: 2.5vw;
+}
+.main-menu {
+    display: flex;
+    align-items: center;
+    width: auto;
+    min-height:2vw;
+    display: flex;
+    flex-direction: row;
+    padding: 0 10px;
+}
+
+.logo > img {
+  min-width: 2vw;
+  width: 3.5vw;
+  max-width: 5vw;
+  aspect-ratio: 1;
+}
+
+/*TABLE*/
+#tablecontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2vw 3vw;
+}
+
+.blackjack-table {
+  display: flex;
+  flex-direction: column;
+  gap:0.5vw;
+  align-items: center;
+  position: relative;
+  width: var(--table-size);
+  aspect-ratio: 2/1;
+  border-radius: 0 0 var(--table-size)var(--table-size);
+  background-color: var(--table-bg);
+  box-shadow:0px 0.3vw 1.3vw 0px #000000a8, inset 0px -0.3vw 0.4vw 0px #000000a8;
+}
+
+.blackjack-table::before {
+  content: "";
+  position: absolute;
+  width: calc(var(--table-size) + var(--table-border));
+  left: calc(var(--table-border)*-0.5);
+  aspect-ratio: 2/1;
+  border-radius: 0 0 calc(var(--table-size) + var(--table-border)) calc(var(--table-size) + var(--table-border));
+  background-color: brown;
+  box-shadow:0px 0.6vw 1vw 0.5vw #000000a8, inset 0px -0.5vw 2.9vw 0px rgba(197, 197, 197, 0.3);
+  z-index: -2;
+}
+
+
+/*BETTING AREA*/
+.betting-area {
+  resize: none;
+  aspect-ratio: 2/1;
+  width: calc(var(--table-size) - var(--table-border));
+  box-sizing: content-box;
+  position: absolute;
+  left: calc(var(--table-border)/2);
+}
+
+.bets-container {
+  position: relative;
+  all: inherit;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  left:0;
+  justify-content: space-between;
+}
+
+.bets {
+  width: calc(var(--table-size)/18);
+  height: calc(var(--table-size)/13);
+  border: 1.4px solid var(--lines);
+  border-radius: 5%;
+}
+
+
+/*PLAYER AREA*/
+
+.player-area{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  position:absolute;
+  left: 50%;
+  transform: translate(-50%);
+  width: calc(var(--table-size) - var(--table-border)*3.6);
+  aspect-ratio: 2/1;
+  border: 1.4px solid var(--lines) ;
+  border-top: none;
+  border-radius: 0 0 calc(var(--table-size)*2) calc(var(--table-size)*2);
+  z-index: 10;
+}
+  
+.player-area-upperline {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position:absolute;
+  left: 50%;
+  transform: translate(-50%);
+  width: calc(var(--table-size) - var(--table-border)*5.1);
+  aspect-ratio: 2/1;
+  border: 1.4px solid var(--lines) ;
+  border-top: none;
+  border-radius: 0 0 calc(var(--table-size)) calc(var(--table-size));
+  z-index: 3;
+}
+
+.cards-container {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  left:0;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+}
+
+.player-cards {
+  width: 7vw;
+  display: flex;
+  border: 1px solid aqua;
+  aspect-ratio: 2 / 3;
+  position: relative;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.player-cards .card {
+  position: relative;
+  min-width: 4vw;
+}
+
+#must {
+  font-size: 1.5vw;
+  color: var(--table-text-color);
+}
+
+#insurance {
+  font-size: 2.5vw;
+  color: var(--table-text-color);
+}
+
+#title {
+  position: relative;
+  color: rgb(32 24 24 / 70%);
+  font-weight: bolder;
+  font-size: 2vw;
+  z-index: 3;
+}
+
+
+/*DEALER AREA*/
+.chips-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+  width: 22vw;
+  height: 7.5vw;
+  border: 1px solid black;
+  border-top: 0;
+  border-bottom: 2vw solid black;
+  background-color: #121212;
+}
+
+.bar {
+  background-color: black;
+  height: inherit; /* Çubuk yüksekliği */
+  width:0.4vw ;
+  box-shadow:0px 0px 20px 0px #5d5d5dc4, -14px -10px 20px 11px #000
+}
+
+.dealer-area {
+  position: relative;
+  display: inline-block;
+  width:auto;
+  z-index: 9999;
+}
+
+.dealer-cards {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 0.3vw;
+  width: auto;
+  border-radius: 4px;
+  /* border: 1px solid aqua; */
+  overflow: hidden;
+}
+
+.card{
+  width: 4vw;
+  overflow: hidden;
+  border-radius: 2px;
+  aspect-ratio: 2/3;
+  box-shadow: -0.18vw 0.2vw 5px 0vw #00000069;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+}
+
+
+/*BUTTONS*/
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 2vw;
+  margin: 0 5vw 0 0;
+}
