@@ -13,6 +13,7 @@ class Player {
     #splittedPoints = 0;
     #playerPoints = 0;
     #cardImages = [];
+    #splittedCardImages = [];
     #isSplitted = false;
 
     constructor(playerType, username, cards){
@@ -38,10 +39,10 @@ class Player {
         this.#cardImages.push(cardImage);
     }
 
-    setCardImages(){
+    setCardImages(cards){
         var cardImages = [];
-    
-        this.#cardImages.forEach(c => {
+
+        cards.forEach(c => {
             var card = document.createElement("div");
             card.classList.add("card"); 
             var img = document.createElement("img");
@@ -71,10 +72,7 @@ class Player {
     splitCards(){
         if (this.isEqual()) {
             this.resetCardImages();
-            console.log(this.#playerCards)
             this.#splittedCards.push(this.#playerCards.pop());
-            console.log(this.#playerCards)
-
             this.#splittedCards.push(deck.pop());
             this.#splittedPoints = this.calculatePoints(this.#splittedCards)
 
@@ -89,8 +87,12 @@ class Player {
                 this.getCardImage(element);
             });
 
-            // console.log(this.#playerCards)
-            // console.log(this.#splittedCards)
+
+            this.#splittedCardImages.push(this.#cardImages.pop());
+            this.#splittedCardImages.push(this.#cardImages.pop());
+
+            console.log(this.#cardImages)
+            console.log(this.#splittedCardImages)
         }
     }
 
@@ -108,6 +110,10 @@ class Player {
 
     getCardImages(){
         return this.#cardImages;
+    }
+
+    getSplittedCardImages(){
+        return this.#splittedCardImages;
     }
 
     getSplittedCards(){
@@ -169,8 +175,6 @@ class Player {
         return totalPoints;
     }
     
-    
-    
     setPoints(){
         // console.log(this.getCards());
         // console.log("eski: " + this.getPoints());
@@ -183,14 +187,6 @@ class Player {
         this.#playerCards.push(card);
 
     }
-
-}
-
-window.onload = function () {
-    buildDeck();
-    shuffleDeck();
-    startGame();
-
 }
 
 function buildDeck() {
@@ -238,69 +234,32 @@ function positionPlayerCards(playerList) {
     });
 }
 
-function setPlayerFields(playerList){
-    // var players = Object.values(playerList);
+function setPlayerField(player /*playerlist olacak*/){
+    var playerArea = document.querySelector("." + player.getPlayerType() + "-area");
+        var cardsContainer = playerArea.querySelector(".cards-container");
+        
+        var playerField = document.createElement("div");
+        playerField.classList.add("player");
+        playerField.id = player.getUsername();
+        
+        cardsContainer.appendChild(playerField);
+    /*
+    var pList = Object.values(playerList);
+    console.log(pList)
+    pList.forEach(player => { 
+        var playerArea = document.querySelector("." + player.getPlayerType() + "-area");
+        var cardsContainer = playerArea.querySelector(".cards-container");
+        
+        var playerField = document.createElement("div");
+        playerField.classList.add("player");
+        playerField.id = player.getUsername();
+        
+        cardsContainer.appendChild(playerField);
+    });*/
 
 
-    /*deneysel*/
-    var playerArea = document.querySelector("." + playerList.getPlayerType() + "-area");
-    var cardsContainer = playerArea.querySelector(".cards-container");
 
 
-    var playerField = document.createElement("div");
-    playerField.classList.add("player");
-    playerField.id = playerList.getUsername();
-    
-
-
-    var cards = playerList.getCards();
-    console.log(cards)
-    if(playerList.isSplitted()){
-        var splittedplayerCards = document.createElement("div");
-        splittedplayerCards.classList.add("splitted-" + playerList.getPlayerType() + "-cards");
-    }
-    
-    var playerCards = document.createElement("div");
-    playerCards.classList.add(playerList.getPlayerType() + "-cards");
-
-    var cardImages = playerList.setCardImages();
-    console.log(cardImages);
-    var cards = playerList.getCardImages();
-    console.log(cards);
-
-    
-
-    cardImages.forEach(element => {
-        console.log(element)
-        var elem = document.querySelector('card')
-        console.log(elem)
-
-        if (cards.includes(element)) {
-            
-            playerCards.appendChild(element);
-        } else {
-            
-            splittedplayerCards.appendChild(element);
-        }
-    });
-
-
-    playerField.appendChild(playerCards);
-    playerField.appendChild(splittedplayerCards);
-
-
-    var pointsContainer = document.createElement("div");
-    pointsContainer.classList.add("points-container");
-    var points = document.createElement("h6");
-    var splittedPoints = document.createElement("h6");
-    points.textContent = "points: " + playerList.getPoints();
-    splittedPoints.textContent = "points: " + playerList.getSplittedPoints();
-
-    pointsContainer.appendChild(points);
-    pointsContainer.appendChild(splittedPoints);
-    playerField.appendChild(pointsContainer);
-
-    cardsContainer.appendChild(playerField);
 
     // players.forEach(player => {
     //     var playerArea = document.querySelector("." + player.getPlayerType() + "-area");
@@ -326,7 +285,92 @@ function setPlayerFields(playerList){
     // positionPlayerCards(players);
 }
 
+function setPlayerCards(player /*playerlist olacak*/) {
+    
+    var playerField = document.querySelector('#'+ player.getUsername() +'.'+ 'player');        
+    
+    if(player.isSplitted()){
+        var splittedplayerCards = document.createElement("div");
+        splittedplayerCards.classList.add("splitted-" + player.getPlayerType() + "-cards");
+        player.setCardImages(player.getSplittedCardImages()).forEach(element => {
+            splittedplayerCards.appendChild(element);
+        });
+        playerField.appendChild(splittedplayerCards);
+    }
+    
+    var playerCards = document.createElement("div");
+    playerCards.classList.add(player.getPlayerType() + "-cards"); 
+    
+    player.setCardImages(player.getCardImages()).forEach(element => {
+        playerCards.appendChild(element);
+    });
+    playerField.appendChild(playerCards);
+      //positionPlayerCards([player]);
 
+    /*
+    Object.values(playerList).forEach(player => {    
+        var playerField = document.querySelector('#player.'+ player.getUsername())
+        console.log("flıuflawbwlfııfuwbwl");
+        
+        if(player.isSplitted()){
+            var splittedplayerCards = document.createElement("div");
+            splittedplayerCards.classList.add("splitted-" + player.getPlayerType() + "-cards");
+            player.setCardImages(player.getSplittedCardImages()).forEach(element => {
+                splittedplayerCards.appendChild(element);
+            });
+            playerField.appendChild(splittedplayerCards);
+            
+            var splittedPoints = document.createElement("div");
+            splittedPoints.textContent = "points: " + player.getSplittedPoints();
+            pointsContainer.appendChild(splittedPoints);
+        }
+        
+        var playerCards = document.createElement("div");
+        playerCards.classList.add(player.getPlayerType() + "-cards"); 
+        
+        player.setCardImages(player.getCardImages()).forEach(element => {
+            playerCards.appendChild(element);
+        });
+        playerField.appendChild(playerCards);
+    });
+    */
+
+}
+
+function setPlayerPoints(player /*playerlist olacak*/) {
+    var playerField = document.querySelector('#'+ player.getUsername() +'.'+ 'player');        
+    console.log(playerField)
+    var pointsContainer = document.createElement("div");
+    pointsContainer.classList.add("points-container");
+    var points = document.createElement("span");
+    points.textContent = "points: " + player.getPoints();
+    
+    playerField.appendChild(pointsContainer);
+    
+    if(player.isSplitted()){
+         
+        var splittedPoints = document.createElement("span");
+        splittedPoints.textContent = "points: " + player.getSplittedPoints();
+        console.log(pointsContainer)
+        pointsContainer.appendChild(splittedPoints);
+    }
+
+    pointsContainer.appendChild(points);    
+
+    // Object.values(playerList).forEach(player => { 
+    //     var playerField = document.querySelector('#player'+ player.getUsername())
+    //     console.log(playerField);    
+    //     var pointsContainer = document.createElement("div");
+    //     pointsContainer.classList.add("points-container");
+        
+    //     var points = document.createElement("div");
+    //     points.textContent = "points: " + player.getPoints();
+        
+    //     pointsContainer.appendChild(points);    
+    //     playerField.appendChild(pointsContainer);
+    // });
+    
+}
 
 function initializeCards(playerList) {
     var players = Object.values(playerList);
@@ -367,7 +411,6 @@ function setButtons(){
     buttons.appendChild(splitButton);
 }
 
-
 function getCurrentPlayer() {
     turnOrder = Object.keys(playerList);
     return playerList[turnOrder[currentPlayerIndex]];
@@ -381,47 +424,65 @@ function processCurrentPlayerTurn() {
 }
 
 function nextPlayerTurn() {
-    currentPlayerIndex++;
+    currentPlayerIndex++
     if (currentPlayerIndex >= turnOrder.length) {
-        currentPlayerIndex = 0;
+      currentPlayerIndex = 0
+    }
+    while (playerList[turnOrder[currentPlayerIndex]].isSplitted()) {
+      currentPlayerIndex++
+      if (currentPlayerIndex >= turnOrder.length) {
+        currentPlayerIndex = 0
+      }
     }
 }
 
-function updatePlayerArea(player) {
-    console.log("#" + player.getUsername() + ".player")
-    var playerArea = document.querySelector("#" + player.getUsername() + ".player")
-    console.log(playerArea);
-
-    //positionPlayerCards([player]);
-}
-
-function updatePoints(player){
-    var points = player.getPoints();
+function updatePlayerArea(player) {     
+    var playerArea = document.querySelector('#'+ player.getUsername() +'.'+ 'player');  
+    // console.log(playerArea);
+    $(playerArea).empty();
+    setPlayerCards(player);
+    setPlayerPoints(player);
 }
 
 function split() {
+    console.log("splitlendi")
     currentPlayer.setAsSplitted();
     currentPlayer.splitCards();
-    // var splitButton = document.querySelector('#split');
-    // splitButton.disabled = false;
+    var splitButton = document.querySelector('#split');
+    splitButton.disabled = false;
     updatePlayerArea(currentPlayer);
-    updatePoints(currentPlayer);
-    
+    // updatePoints(currentPlayer);
 }
 
 function hit() {
-    console.log(currentPlayer)
+    console.log("hit")
     currentPlayer.getCardImage(currentPlayer.getCard());
-    currentPlayer.setCardImages();
+    currentPlayer.setCardImages(currentPlayer.getCardImages());
     currentPlayer.setPoints();
     console.log(currentPlayer.getUsername() + ":  " + currentPlayer.getPoints());
     updatePlayerArea(currentPlayer);
-    updatePoints(currentPlayer);
+}
+
+function hitForSplitted() {
+    console.log("hit for splitted")
+    var scimg = currentPlayer.getSplittedCardImages();
+    scimg.push = currentPlayer.getCardImage(currentPlayer.getCard());
+    currentPlayer.setCardImages(currentPlayer.getSplittedCardImages());
+    currentPlayer.setPoints();
+    updatePlayerArea(currentPlayer);
 }
 
 function stand() {
-    nextPlayerTurn();
-    processCurrentPlayerTurn();
+    if(!currentPlayer.isSplitted()){
+        nextPlayerTurn();
+        processCurrentPlayerTurn();
+    }else{
+        var hitButton = document.querySelector('button#hit');
+        console.log(hitButton)
+        hitButton.removeEventListener("click", hit);
+        hitButton.addEventListener("click", hitForSplitted);
+        
+    }
 }
 
 function startGame() {
@@ -438,19 +499,38 @@ function startGame() {
         var card = cards[i];
         niyazi.addCard(card);
         niyazi.getCardImage(card);
-        niyazi.setCardImages();
+        niyazi.setCardImages(niyazi.getCardImages());
         niyazi.calculatePoints(cards);
     }
 
     currentPlayer = niyazi;
-    split();
-    console.log(niyazi);
+    //split();
+    console.log(currentPlayer)
 
     // initializeCards(playerList);
-    setPlayerFields(niyazi);
+    setPlayerField(currentPlayer);
+    setPlayerCards(currentPlayer);
+    setPlayerPoints(currentPlayer);
     
+    //fonkları tek player ile çalıştır
+
+    /* 
+    playerList.forEach(player => {
+        setPlayerFields(player);
+        setPlayersCards(player);
+        setPlayersPoints(player);
+    });
+    
+    */
+
+
     // processCurrentPlayerTurn();
-    // setButtons();
+    setButtons();
 }
 
+window.onload = function () {
+    buildDeck();
+    shuffleDeck();
+    startGame();
 
+}
