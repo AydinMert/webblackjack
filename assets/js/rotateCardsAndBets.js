@@ -2,6 +2,7 @@
     var playerArea = document.querySelector('.player-area');
     var cardsContainer = playerArea.querySelector('.cards-container');
     const pCrds = cardsContainer.querySelectorAll('.player-cards');
+    const spltpCrds = cardsContainer.querySelectorAll('.player-cards');
 
     console.log("fawfwafaw")
     console.log(pCrds)
@@ -36,6 +37,12 @@
         }
     });
 
+    // spltpCrds.forEach((card, index) => {
+    //     const { x, y, rotate } = cardpositions[index]; // positions dizisinden konum ve dönüş değerlerini al
+    //     if (x !== undefined && y !== undefined && rotate !== undefined) {
+    //         card.style.transform = `translate(${x}vw, ${y}vw) rotate(${rotate}deg)`; // kartın stilini güncelle
+    //     }
+    // });
     
 
     

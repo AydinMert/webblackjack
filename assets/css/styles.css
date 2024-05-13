@@ -296,9 +296,10 @@
   z-index: 99;
 }
 
-.player-cards {
+.player {
   width: 7vw;
   display: flex;
+  flex-direction: row;
   border: 1px solid aqua;
   aspect-ratio: 2 / 3;
   position: relative;
@@ -306,9 +307,29 @@
   align-items: flex-end;
 }
 
-.player-cards .card {
+.player-cards {
   position: relative;
-  min-width: 4vw;
+  display: flex;
+  width: auto;
+}
+
+.splitted-player-cards {
+  position: relative;
+  display: flex;
+  width: auto;
+}
+
+.card{
+  width: 4vw;
+  overflow: hidden;
+  border-radius: 2px;
+  aspect-ratio: 2/3;
+  box-shadow: -0.18vw 0.2vw 5px 0vw #00000069;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
 }
 
 #must {
@@ -369,20 +390,6 @@
   /* border: 1px solid aqua; */
   overflow: hidden;
 }
-
-.card{
-  width: 4vw;
-  overflow: hidden;
-  border-radius: 2px;
-  aspect-ratio: 2/3;
-  box-shadow: -0.18vw 0.2vw 5px 0vw #00000069;
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
-}
-
 
 /*BUTTONS*/
 
